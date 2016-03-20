@@ -10,6 +10,5 @@ before_script:
     - sed 's/\("require": {\)/\1"pulsestorm\/pestle":"dev-master",/' composer.json
     - composer install
     - curl -LO http://pestle.pulsestorm.net/pestle.phar
-    - 
     
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
