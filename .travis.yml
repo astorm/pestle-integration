@@ -6,5 +6,5 @@ php:
     - 7.0
 before_script:
     - ./build.sh
-    
+    - cd magento2    
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
