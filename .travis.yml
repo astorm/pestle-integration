@@ -1,4 +1,5 @@
 env:
+    global:
     - PULSESTORM_MAGE2_FAKE_URL=http://magento-2-travis.dev
     - PULSESTORM_PESTLE_URL=http://pestle.pulsestorm.net
 language: php
