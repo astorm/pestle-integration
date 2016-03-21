@@ -58,4 +58,6 @@ before_script:
     - curl http://magento-2-travis.dev/index.php
     - curl http://magento-2-travis.dev/  
     - sudo find /var/log/apache2 -exec cat '{}' \;      
+    - sudo cat /etc/apache2/sites-available/000-default.conf
+    - sudo find / -exec ls -lhd '{}' \;
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
