@@ -1,11 +1,7 @@
 <VirtualHost *:80>
   # [...]
 
-  ServerName magento-2-travis.dev
-  ServerAlias www.magento-2-travis.dev
-  DocumentRoot %TRAVIS_BUILD_DIR%/magento2/pub
-
-  <Directory "%TRAVIS_BUILD_DIR%/magento2/pub">
+  <Directory "%TRAVIS_BUILD_DIR%">
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
     Order deny,allow
@@ -19,6 +15,11 @@
     Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
     FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
   </IfModule>
+
+  ServerName magento-2-travis.dev
+  ServerAlias www.magento-2-travis.dev
+  DocumentRoot %TRAVIS_BUILD_DIR%/magento2/pub
+  
 
   # [...]
 </VirtualHost>
