@@ -59,9 +59,9 @@ before_script:
 #     
 #    # clone main magento github repository
 #    - git clone https://github.com/magento/magento2
-#    # download latest pestle phar
-#    - curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
-#    - sudo mv pestle.phar /usr/local/bin
+    # download latest pestle phar
+    - curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
+    - sudo mv pestle.phar /usr/local/bin
 #    # install Magento
 #    - cd magento2  
 #    # add pestle project to get tests
