@@ -34,6 +34,8 @@ before_script:
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
     - sudo service apache2 restart  
     - cat /etc/apache2/sites-available/default     
+    - sudo ls /etc/apache2
+    - sudo ls /etc/apache2/sites-enabled
 #         
 #    # clone main magento github repository
 #    - git clone https://github.com/magento/magento2
