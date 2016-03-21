@@ -9,5 +9,6 @@ before_script:
     - ./build.sh
     - curl -LO http://pestle.pulsestorm.net/pestle.phar    
     - cd magento2    
-    - composer install
+    - cat composer.json
+#    - composer install
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
