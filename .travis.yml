@@ -6,6 +6,7 @@ php:
     - 7.0
 before_script:
     - git clone https://github.com/magento/magento2
-    - cd magento2
-    - ../build.sh
+    - ./build.sh
+    - composer install
+    - curl -LO http://pestle.pulsestorm.net/pestle.phar    
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
