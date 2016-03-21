@@ -70,6 +70,7 @@ before_script:
     - curl http://magento-2-travis.dev/  
     - sudo find /var/log/apache2 -exec cat '{}' \;      
     - sudo cat /etc/apache2/sites-available/000-default.conf
+    - sudo cat /etc/apache2/sites-enabled/000-default.conf    
     - sudo apachectl -V
     - sudo apache2ctl -V
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
