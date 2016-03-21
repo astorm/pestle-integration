@@ -45,9 +45,6 @@ before_script:
     - sudo ls /etc/apache2/sites-available
     - sudo ls /etc/apache2/sites-enabled
     - pwd
-    - mkdir -p /home/travis/build/astorm/pestle-integration/magento2/pub
-    - touch /home/travis/build/astorm/pestle-integration/magento2/pub/index.php
-    - echo 'This is a test' > /home/travis/build/astorm/pestle-integration/magento2/pub/index.php
     # clone main magento github repository
     - git clone https://github.com/magento/magento2
     # use sed to insert astorm/pulsestorm into magento's composer.json
