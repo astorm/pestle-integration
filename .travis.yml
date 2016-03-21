@@ -29,6 +29,10 @@ before_script:
     - sudo a2enmod rewrite actions fastcgi alias
     - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+    #   get permissions on file system right before starting up apache
+    - sudo find $TRAVIS_BUILD_DIR -exec chmod 777 '{}' +    
+    - ls -lh $TRAVIS_BUILD_DIR
+    - sudo chmod 777 $TRAVIS_BUILD_DIR
     #   configure apache virtual hosts
     - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
     - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
@@ -38,8 +42,6 @@ before_script:
     - pwd
     # awful hack used during travis debugging that I swear I'm going to remove
     # but then again you're reading this so I didn't remove it and **sigh**
-    - sudo find $TRAVIS_BUILD_DIR -exec chmod 777 '{}' +
-
 #    # clone main magento github repository
 #    - git clone https://github.com/magento/magento2
 #    # use sed to insert astorm/pulsestorm into magento's composer.json
@@ -51,6 +53,8 @@ before_script:
 #    - cd magento2        
 #    - composer update    
 #    - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url http://magento-2-travis.dev --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
+    # get permissions on file system right after checkout
+    - sudo find $TRAVIS_BUILD_DIR -exec chmod 777 '{}' +
     - curl http://magento-2-travis.dev/index.php
     - curl http://magento-2-travis.dev/  
     - sudo find /var/log/apache2 -exec cat '{}' \;      
