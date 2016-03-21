@@ -11,4 +11,5 @@ before_script:
     - cd magento2    
     - cat composer.json
     - composer install
+    - find vendor
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
