@@ -1,5 +1,6 @@
 language: php
 sudo: required
+dist: trusty
 services:
   - mysql
 php:
@@ -13,13 +14,11 @@ before_script:
     - cat composer.json
     - composer selfupdate
     - composer update
-    - sudo apt-get remove -y -qq --purge mysql-common mysql-server-5.5 mysql-server-core-5.5 mysql-client-5.5 mysql-client-core-5.5;
-      sudo apt-get -y -qq autoremove;
-      sudo apt-get -y -qq autoclean;
-      sudo apt-get install -y -qq mysql-server-5.6 mysql-client-5.6;
-      mysql -uroot -e 'SET @@global.sql_mode = NO_ENGINE_SUBSTITUTION; CREATE DATABASE magento_integration_tests;';
-      mv dev/tests/integration/etc/install-config-mysql.travis.php.dist dev/tests/integration/etc/install-config-mysql.php;
-          
-    - mysql -e 'create database magento_2_travis;'
+    - sudo apt-get update -qq
+    - sudo apt-get remove -y -qq --purge mysql-common mysql-server-5.5 mysql-server-core-5.5 mysql-client-5.5 mysql-client-core-5.5
+    - sudo apt-get -y -qq autoremove;
+    - sudo apt-get -y -qq autoclean;
+    - sudo apt-get install -y -qq mysql-server-5.6 mysql-client-5.6;
+    - mysql -uroot -e 'SET @@global.sql_mode = NO_ENGINE_SUBSTITUTION; CREATE DATABASE magento_2_travis;';
     - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url http://magento-2-travis.dev --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
