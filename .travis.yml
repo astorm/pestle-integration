@@ -46,5 +46,5 @@ before_script:
 #    - cd magento2        
 #    - composer update    
 #    - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url http://magento-2-travis.dev --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
-    - curl http://magento-2-travis.dev
+    - curl http://magento-2-travis.dev/index.php
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
