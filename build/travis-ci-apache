@@ -1,6 +1,8 @@
 <VirtualHost *:80>
   # [...]
 
+  ServerName magento-2-travis.dev
+  ServerAlias www.magento-2-travis.dev
   DocumentRoot %TRAVIS_BUILD_DIR%/magento2/pub
 
   <Directory "%TRAVIS_BUILD_DIR%/magento2/pub">
