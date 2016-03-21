@@ -36,9 +36,9 @@ before_script:
     - sudo ls /etc/apache2/sites-available
     - sudo ls /etc/apache2/sites-enabled
     - pwd
-    # awful hack using during travis debugging that I swear I'm going to remove
+    # awful hack used during travis debugging that I swear I'm going to remove
     # but then again you're reading this so I didn't remove it and **sigh**
-    - sudo find .. -exec chmod 777 '{}' +
+    - sudo find $TRAVIS_BUILD_DIR -exec chmod 777 '{}' +
 
 #    # clone main magento github repository
 #    - git clone https://github.com/magento/magento2
