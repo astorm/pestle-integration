@@ -11,8 +11,6 @@ env:
 language: php
 sudo: required
 dist: trusty
-services:
-    - mysql
 php:
     - 5.6
 addons:
@@ -68,10 +66,10 @@ before_script:
     - curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
     - sudo mv pestle.phar /usr/local/bin
     - sudo chmod +x /usr/local/bin/pestle.phar
+    # use build.sh script to add pestle repository to composer.json
+    - ./build.sh        
     # install Magento
     - cd magento2  
-    # use build.sh script to add pestle repository to composer.json
-    - ./build.sh    
     # add pestle project to get tests
     - composer require pulsestorm/pestle dev-master          
     #- composer update    
