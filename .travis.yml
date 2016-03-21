@@ -6,6 +6,9 @@ services:
 php:
     - 5.6
 #    - 7.0
+env:
+    - PULSESTORM_MAGE2_FAKE_URL=http://magento-2-travis.dev
+    - PULSESTORM_PESTLE_URL=http://pestle.pulsestorm.net
 addons:
   hosts:
     - magento-2-travis.dev
@@ -44,11 +47,7 @@ before_script:
     - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
     #   awful hack used during travis debugging that I swear I'm going to remove
     #   but then again you're reading this so I didn't remove it and **sigh**    
-    #       get permissions on file system right before starting up apache
-    #- sudo find $TRAVIS_BUILD_DIR -exec chmod 777 '{}' +    
-    - sudo chmod 777 /home
-    - sudo chmod 777 /home/travis    
-    - sudo chmod 777 /home/travis/build        
+    - sudo chmod 777 /home /home/travis /home/travis/build            
     #- sudo chmod 777 $TRAVIS_BUILD_DIR
     #- echo $TRAVIS_BUILD_DIR
     #   configure apache virtual hosts
@@ -59,12 +58,17 @@ before_script:
     - git clone https://github.com/magento/magento2
     # use sed to insert astorm/pulsestorm into magento's composer.json
     # wrapped in a build script because travis yaml parsing
-    - ./build.sh
+    #- ./build.sh
+    # derp to above
+    - composer require pulsestorm/pestle dev-master
     # download latest pestle phar
-    - curl -LO http://pestle.pulsestorm.net/pestle.phar        
+    - curl -LO "$PULSESTORM_PESTLE_URL/pestle.phar"
+    - sudo mv pestle.phar /usr/local/bin
     # install Magento
     - cd magento2        
     - composer update    
-    - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url http://magento-2-travis.dev --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
-    - curl http://magento-2-travis.dev/index.php 
+    - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url "$PULSESTORM_MAGE2_FAKE_URL" --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
+    # test that magento is installed
+    - curl "$PULSESTORM_MAGE2_FAKE_URL/index.php"
+    - pestle.phar hello_world
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
