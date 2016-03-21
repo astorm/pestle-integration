@@ -7,18 +7,35 @@ php:
     - 5.6
     - 7.0
 before_script:
-    - git clone https://github.com/magento/magento2
-    - ./build.sh
-    - curl -LO http://pestle.pulsestorm.net/pestle.phar    
-    - cd magento2    
-    - cat composer.json
+    # get latest composer
     - composer selfupdate
-    - composer update
+    # add mysql 5.6
     - sudo apt-get update -qq
     - sudo apt-get remove -y -qq --purge mysql-common mysql-server-5.5 mysql-server-core-5.5 mysql-client-5.5 mysql-client-core-5.5
     - sudo apt-get -y -qq autoremove;
     - sudo apt-get -y -qq autoclean;
-    - sudo apt-get install -y -qq mysql-server-5.6 mysql-client-5.6;
+    - sudo apt-get install -y -qq mysql-server-5.6 mysql-client-5.6;    
     - mysql -uroot -e 'SET @@global.sql_mode = NO_ENGINE_SUBSTITUTION; CREATE DATABASE magento_2_travis;';
+    # add apache
+    - sudo apt-get install apache2 libapache2-mod-fastcgi
+    #   enable php-fpm
+    - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+    - sudo a2enmod rewrite actions fastcgi alias
+    - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+    #   configure apache virtual hosts
+    - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+    - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+    - sudo service apache2 restart        
+    # clone main magento github repository
+    - git clone https://github.com/magento/magento2
+    # use sed to insert astorm/pulsestorm into magento's composer.json
+    # wrapped in a build script because travis yaml parsing
+    - ./build.sh
+    # download latest pestle phar
+    - curl -LO http://pestle.pulsestorm.net/pestle.phar        
+    # install Magento
+    - cd magento2        
+    - composer update    
     - php bin/magento setup:install --admin-email astorm@alanstorm.com --admin-firstname Alan --admin-lastname Storm --admin-password ih8magento --admin-user astorm --backend-frontname admin --base-url http://magento-2-travis.dev --db-host 127.0.0.1 --db-name magento_2_travis --db-user root --session-save files --use-rewrites 1 --use-secure 0 -vvv
 script: vendor/bin/phpunit vendor/pulsestorm/pestle/tests-integration/FirstTest.php 
