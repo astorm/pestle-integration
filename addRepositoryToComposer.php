@@ -41,7 +41,7 @@ function main($argv)
     
     if(!isset($json->repositories))
     {
-        $json->repositories = new stdClass;
+        $json->repositories = new \stdClass;
     }
     
     $json->repositories->{$repository_key} = $repository;
