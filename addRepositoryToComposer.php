@@ -12,6 +12,10 @@ function createRepositoryObjectFromInformation($type, $url)
     return $object;
 }
 
+function output($string)
+{
+    file_put_contents('/tmp/test.log',"$string\n",FILE_APPEND);
+}
 function main($argv)
 {
     //     "repositories": {
@@ -29,7 +33,11 @@ function main($argv)
     $repository = createRepositoryObjectFromInformation(
         $repository_type, $repository_url);
     
-    $json = json_decode(file_get_contents($file));
+    $contents = file_get_contents($file);
+    output("Loaded JSONL $file");
+    output($contents);
+    $json = json_decode($contents);
+    
     if(!isset($json->repositories))
     {
         $json->repositories = new stdClass;
