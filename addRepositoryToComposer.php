@@ -20,8 +20,8 @@ function main($argv)
     //             "url": "git@github.com:astorm/pestle.git"
     //         }
     //     }, 
-    
-    $file            = 'magento2/composer.json';
+    $script          = array_shift($argv);
+    $file            = array_shift($argv);
     $repository_type = 'git';
     $repository_url  = 'git@github.com:astorm/pestle.git';    
     $repository_key  = createKeyFromUrl($repository_url);
