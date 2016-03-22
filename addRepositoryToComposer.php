@@ -1,5 +1,6 @@
 <?php
 namespace Pulsestorm\Travis\addRepositoryToComposer;
+use stdClass;
 function createKeyFromUrl($url)
 {
     return preg_replace('%[^a-zA-Z0-9]%', '_', $url);
