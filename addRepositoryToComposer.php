@@ -1,4 +1,5 @@
 <?php
+namespace Pulsestorm\Travis\addRepositoryToComposer;
 function createKeyFromUrl($url)
 {
     return preg_replace('%[^a-zA-Z0-9]%', '_', $url);
@@ -33,7 +34,7 @@ function main($argv)
     $repository = createRepositoryObjectFromInformation(
         $repository_type, $repository_url);
     
-    $contents = file_get_contents($file);
+    $contents = file_get_contents(__DIR__ . '/' . $file);
     output("Loaded JSONL $file");
     output($contents);
     $json = json_decode($contents);
