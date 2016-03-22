@@ -1,5 +1,6 @@
 <?php
 namespace Pulsestorm\Travis\addRepositoryToComposer;
+error_reporting(E_ALL);
 use stdClass;
 function createKeyFromUrl($url)
 {
@@ -35,7 +36,8 @@ function main($argv)
     $repository = createRepositoryObjectFromInformation(
         $repository_type, $repository_url);
     
-    $contents = file_get_contents(__DIR__ . '/' . $file);
+    // $contents = file_get_contents($file);
+    $contents = `cat $file`;    //file_get_contents not working in travis?
     output("Loaded JSONL $file");
     output($contents);
     $json = json_decode($contents);
