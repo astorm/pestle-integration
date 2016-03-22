@@ -69,7 +69,7 @@ before_script:
     - cat magento2/composer.json
     - php addRepositoryToComposer.php magento2/composer.json > magento2/composer.json
     - cat magento2/composer.json
-    - tail /tmp/test.log
+    - tail  /tmp/test.log
     # install Magento
     - cd magento2  
     # add pestle project to get tests
