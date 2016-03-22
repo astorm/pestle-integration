@@ -66,6 +66,7 @@ before_script:
     - sudo chmod +x /usr/local/bin/pestle.phar
     # use build.sh script to add pestle repository to composer.json
     #- ./build.sh        
+    - cat magento2/composer.json
     - php addRepositoryToComposer.php magento2/composer.json > magento2/composer.json
     - cat magento2/composer.json
     # install Magento
