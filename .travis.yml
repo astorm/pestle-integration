@@ -31,8 +31,6 @@ before_script:
     #- pwd    
     #    
     # get latest composer and disable xdebug for perf    
-    - echo $PULSESTORM_MAGE2_FAKE_URL
-    - echo $PULSESTORM_PESTLE_URL
     - composer selfupdate
     - echo '' > ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini   
     # add multiverse, update apt
@@ -67,7 +65,8 @@ before_script:
     - sudo mv pestle.phar /usr/local/bin
     - sudo chmod +x /usr/local/bin/pestle.phar
     # use build.sh script to add pestle repository to composer.json
-    - ./build.sh        
+    #- ./build.sh        
+    - php addRepositoryToComposer.php
     # install Magento
     - cd magento2  
     # add pestle project to get tests
